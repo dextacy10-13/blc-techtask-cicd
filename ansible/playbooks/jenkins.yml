@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    jenkins_package_state: latest
+    jenkins_prefer_lts: false
+    jenkins_plugins:
+      - checkstyle
+      - cloverphp
+      - crap4j
+      - dry
+      - htmlpublisher
+      - jdepend
+      - plot
+      - pmd
+      - violations
+      - warnings
+      - xunit
+    docker_users:
+      - jenkins
+  roles:
+    - geerlingguy.java
+    - geerlingguy.jenkins
