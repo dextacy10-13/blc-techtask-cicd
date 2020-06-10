@@ -25,6 +25,47 @@ resource "aws_instance" "jenkins" {
     Name               = "jenkins"
     ManagedByTerraform = true
   }
-  security_groups = [aws_security_group.jenkins-cicd.id]
-  subnet_id       = aws_subnet.subnet.id
+  vpc_security_group_ids = [aws_security_group.jenkins-cicd.id]
+  subnet_id              = aws_subnet.subnet.id
+}
+
+// usually would use var.stage to have a single instance per workspace e.g php-${var.stage}
+// rather than duplicate the instances below
+resource "aws_instance" "php_develop" {
+  ami           = var.php_ami
+  instance_type = "t2.micro"
+  key_name      = var.ami_key_pair_name
+
+  tags = {
+    Name               = "php_develop"
+    ManagedByTerraform = true
+  }
+  vpc_security_group_ids = [aws_security_group.php-cicd.id]
+  subnet_id              = aws_subnet.subnet.id
+}
+
+resource "aws_instance" "php_staging" {
+  ami           = var.php_ami
+  instance_type = "t2.micro"
+  key_name      = var.ami_key_pair_name
+
+  tags = {
+    Name               = "php_staging"
+    ManagedByTerraform = true
+  }
+  vpc_security_group_ids = [aws_security_group.php-cicd.id]
+  subnet_id              = aws_subnet.subnet.id
+}
+
+resource "aws_instance" "php_production" {
+  ami           = var.php_ami
+  instance_type = "t2.micro"
+  key_name      = var.ami_key_pair_name
+
+  tags = {
+    Name               = "php_production"
+    ManagedByTerraform = true
+  }
+  vpc_security_group_ids = [aws_security_group.php-cicd.id]
+  subnet_id              = aws_subnet.subnet.id
 }

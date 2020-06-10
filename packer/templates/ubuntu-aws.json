@@ -2,6 +2,8 @@
   "builders": [{
     "type": "amazon-ebs",
     "region": "eu-west-2",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
     "source_ami_filter": {
       "filters": {
         "virtualization-type": "hvm",
@@ -23,6 +25,21 @@
         "ansible_python_interpreter=/usr/bin/python3"
       ],
       "playbook_file": "../../ansible/playbooks/jenkins.yml"
+    },
+    {
+      "type":  "shell",
+      "environment_vars": [
+        "AWS_ACCESS_KEY_ID={{user `aws_access_key`}}",
+        "AWS_SECRET_ACCESS_KEY={{user `aws_secret_key`}}",
+        "AWS_REGION={{user `region`}}"
+      ],
+      "inline": [
+        "mkdir -p ~/.aws/",
+        "echo \"[default]\n\" >> ~/.aws/credentials",
+        "echo \"aws_access_key_id=${AWS_ACCESS_KEY_ID}\n\" >> ~/.aws/credentials",
+        "echo \"aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}\" >> ~/.aws/credentials",
+        "echo \"region=${AWS_REGION}\" >> ~/.aws/credentials"
+        ]
     }
   ]
 }

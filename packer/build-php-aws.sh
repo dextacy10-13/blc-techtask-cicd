@@ -8,6 +8,6 @@ cd $DIR
 ansible-galaxy install -r ../ansible/playbooks/requirements.yml
 
 cd ./templates
-packer build -var-file=../ubuntu-aws.env ubuntu-aws.json
+packer build ubuntu-php-aws.json
 
 cd $currentDirectory

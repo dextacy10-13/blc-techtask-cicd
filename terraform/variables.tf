@@ -22,4 +22,8 @@ variable "jenkins_ami" {
   default = ""
 }
 
+variable "php_ami" {
+  default = ""
+}
+
 variable "ami_key_pair_name" {}

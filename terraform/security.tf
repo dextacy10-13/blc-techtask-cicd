@@ -33,3 +33,29 @@ resource "aws_security_group_rule" "egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "ManagedByTerraform"
 }
+
+resource "aws_security_group" "php-cicd" {
+  name        = "allow-ssh-php"
+  vpc_id      = aws_vpc.cicd.id
+  description = "ManagedByTerraform"
+}
+
+resource "aws_security_group_rule" "ssh_php" {
+  type              = "ingress"
+  from_port         = 22
+  protocol          = "tcp"
+  security_group_id = aws_security_group.php-cicd.id
+  to_port           = 22
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "ManagedByTerraform"
+}
+
+resource "aws_security_group_rule" "php_egress" {
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.php-cicd.id
+  to_port           = 0
+  type              = "egress"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "ManagedByTerraform"
+}

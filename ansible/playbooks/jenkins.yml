@@ -7,6 +7,7 @@
     jenkins_prefer_lts: false
     jenkins_plugins:
       - checkstyle
+      - clover
       - cloverphp
       - crap4j
       - dry
@@ -17,8 +18,30 @@
       - violations
       - warnings
       - xunit
-    docker_users:
-      - jenkins
+      - pipeline-aws
+      - workflow-aggregator
+      - git
+      - ssh-agent
+  tasks:
+    - name: Install required base packages
+      become: true
+      apt: name={{ item }} state=present
+      with_items:
+        - curl
+        - git
+        - zip
+        - unzip
+    - name: Install AWS CLI
+      shell: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+    - name: Confirm AWS  CLI Installed
+      shell: aws --version
+    - name: Make Jenkins do sudo
+      shell: |
+        // probably sudo tee and a chmod 600
+        echo '%jenkins ALL=NOPASSWD: ALL' >> /etc/sudoers
   roles:
     - geerlingguy.java
     - geerlingguy.jenkins

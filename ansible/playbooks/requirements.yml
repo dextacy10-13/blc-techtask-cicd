@@ -1,9 +1,7 @@
 ---
 
 - src: geerlingguy.java
-
-# Jenkins role from Ansible Galaxy
 - src: geerlingguy.jenkins
-
-# Docker role from Ansible Galaxy
-- src: geerlingguy.docker
+- src: geerlingguy.php-versions
+- src: geerlingguy.php
+- src: geerlingguy.composer

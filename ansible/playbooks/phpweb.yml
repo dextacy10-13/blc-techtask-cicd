@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    php_memory_limit: "128M"
+    php_max_execution_time: "90"
+    php_upload_max_filesize: "256M"
+    php_version: '7.3'
+    php_versions_install_recommends: false
+    php_packages:
+      - php
+      - php-cli
+      - php-curl
+      - php-zip
+      - php-xml
+      - php{{ php_version}}-xml
+      - php-mbstring
+      - php{{ php_version}}-mbstring
+      - php{{ php_version}}-xmlrpc
+      - php-xdebug
+  roles:
+    - geerlingguy.php
+    - geerlingguy.php-versions
+    - geerlingguy.composer
