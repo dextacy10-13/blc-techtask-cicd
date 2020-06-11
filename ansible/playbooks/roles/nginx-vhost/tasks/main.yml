@@ -1,0 +1,26 @@
+---
+- include_role:
+    name: nginx
+    
+- name: add nginx "http" vhost
+  template: src=templates/http-vhost.conf dest=/etc/nginx/sites-available/http-vhost.conf
+  notify:
+  - restart nginx
+
+- name: link nginx "http" vhost in sites-enabled
+  file: src=/etc/nginx/sites-available/http-vhost.conf dest=/etc/nginx/sites-enabled/http-vhost.conf state=link
+  notify:
+  - restart nginx
+  
+- name: add nginx "ssl" vhost
+  template: src=templates/ssl.http-vhost.conf dest=/etc/nginx/sites-available/ssl.http-vhost.conf
+  when: ssl_certificate is defined
+  notify:
+  - restart nginx
+
+- name: link nginx "ssl" vhost in sites-enabled
+  file: src=/etc/nginx/sites-available/ssl.http-vhost.conf dest=/etc/nginx/sites-enabled/ssl.http-vhost.conf state=link
+  when: ssl_certificate is defined
+  notify:
+  - restart nginx
+

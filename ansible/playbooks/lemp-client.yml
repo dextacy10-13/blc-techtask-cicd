@@ -1,0 +1,33 @@
+---
+- hosts: all
+  become: yes
+  become_method: sudo
+  vars:
+    php_memory_limit: "128M"
+    php_max_execution_time: "90"
+    php_upload_max_filesize: "256M"
+    php_version: '7.3'
+    php_default_version_debian: "7.3"
+    #php_versions_install_recommends: false
+    php_install_recommends: true
+    php_webserver_daemon: "nginx"
+    php_packages:
+      - php
+      - php-cli
+      - php-mysql
+      - php-curl
+      - php-zip
+      - php-xml
+      - php-mbstring
+      - php-mbstring
+      - php-xmlrpc
+      - php-xdebug
+      - php-gd
+      - php-fpm
+    document_root: /var/www/wordpress/
+    www_user: www-data
+  roles:
+    - nginx-vhost
+    - geerlingguy.php
+    - geerlingguy.composer
+    - wp-cli
