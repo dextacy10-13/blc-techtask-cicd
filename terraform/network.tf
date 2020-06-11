@@ -7,22 +7,6 @@ resource "aws_eip" "jenkins_eip" {
   }
 }
 
-resource "aws_eip" "php_staging_eip" {
-  instance = aws_instance.php_staging.id
-  vpc      = true
-  tags = {
-    ManaagedByTerraform = true
-  }
-}
-
-resource "aws_eip" "php_production_eip" {
-  instance = aws_instance.php_production.id
-  vpc      = true
-  tags = {
-    ManaagedByTerraform = true
-  }
-}
-
 resource "aws_eip" "wp_php_dev_eip" {
   instance = aws_instance.wp_php_develop.id
   vpc      = true

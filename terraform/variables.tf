@@ -30,4 +30,8 @@ variable "wp_php_ami" {
   default = ""
 }
 
+variable "access_cidr" {
+  default = ""
+}
+
 variable "ami_key_pair_name" {}

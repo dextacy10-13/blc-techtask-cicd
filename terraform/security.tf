@@ -10,7 +10,7 @@ resource "aws_security_group_rule" "ssh" {
   protocol          = "tcp"
   security_group_id = aws_security_group.jenkins-cicd.id
   to_port           = 22
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [var.access_cidr, cidrsubnet(aws_vpc.cicd.cidr_block, 3, 1)]
   description       = "ManagedByTerraform"
 }
 
@@ -20,7 +20,7 @@ resource "aws_security_group_rule" "jenkins" {
   protocol          = "tcp"
   security_group_id = aws_security_group.jenkins-cicd.id
   to_port           = 8080
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [var.access_cidr]
   description       = "ManagedByTerraform"
 }
 
@@ -46,7 +46,7 @@ resource "aws_security_group_rule" "ssh_php" {
   protocol          = "tcp"
   security_group_id = aws_security_group.php-cicd.id
   to_port           = 22
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [var.access_cidr, cidrsubnet(aws_vpc.cicd.cidr_block, 3, 1)]
   description       = "ManagedByTerraform"
 }
 
