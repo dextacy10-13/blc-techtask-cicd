@@ -46,7 +46,7 @@ resource "aws_security_group_rule" "ssh_php" {
   protocol          = "tcp"
   security_group_id = aws_security_group.php-cicd.id
   to_port           = 22
-  cidr_blocks       = [var.access_cidr, cidrsubnet(aws_vpc.cicd.cidr_block, 3, 1)]
+  cidr_blocks       = ["0.0.0.0/0"]
   description       = "ManagedByTerraform"
 }
 
