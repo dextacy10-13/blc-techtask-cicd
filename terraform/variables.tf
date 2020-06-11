@@ -26,4 +26,8 @@ variable "php_ami" {
   default = ""
 }
 
+variable "wp_php_ami" {
+  default = ""
+}
+
 variable "ami_key_pair_name" {}

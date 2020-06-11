@@ -59,3 +59,13 @@ resource "aws_security_group_rule" "php_egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   description       = "ManagedByTerraform"
 }
+
+resource "aws_security_group_rule" "http" {
+  type              = "ingress"
+  from_port         = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.php-cicd.id
+  to_port           = 80
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "ManagedByTerraform"
+}
