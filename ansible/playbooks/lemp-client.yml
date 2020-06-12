@@ -18,13 +18,22 @@
       - php-zip
       - php-xml
       - php-mbstring
-      - php-mbstring
       - php-xmlrpc
       - php-xdebug
       - php-gd
       - php-fpm
     document_root: /var/www/wordpress/
     www_user: www-data
+  tasks:
+    - name: Install required base packages
+      become: true
+      apt: name={{ item }} state=present
+      with_items:
+        - curl
+        - git
+        - zip
+        - unzip
+        - mysql-client
   roles:
     - nginx-vhost
     - geerlingguy.php
