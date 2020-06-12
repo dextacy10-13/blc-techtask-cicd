@@ -56,6 +56,15 @@ resource "aws_subnet" "subnet" {
   }
 }
 
+resource "aws_subnet" "subnet_coverage" {
+  cidr_block        = cidrsubnet(aws_vpc.cicd.cidr_block, 4, 1)
+  vpc_id            = aws_vpc.cicd.id
+  availability_zone = "${var.region}b"
+  tags = {
+    ManagedByTerraform = true
+  }
+}
+
 resource "aws_route_table" "this" {
   vpc_id = aws_vpc.cicd.id
   route {

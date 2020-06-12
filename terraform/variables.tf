@@ -34,4 +34,12 @@ variable "access_cidr" {
   default = ""
 }
 
+variable "mysql_username_wp" {
+  default = ""
+}
+
+variable "mysql_password_wp" {
+  default = ""
+}
+
 variable "ami_key_pair_name" {}

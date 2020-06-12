@@ -10,7 +10,7 @@
     - restart nginx
 
 - name: Remove default virtual host
-  file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
+  file: path=/etc/nginx/sites-enabled/default state=absent
   notify:
     - restart nginx
 
